@@ -22,18 +22,18 @@ Volcano name:<br>
 Height: %s m
 """
  
-map = folium.Map(location=[38.58, -99.09], zoom_start=5, tiles="Stamen Toner")
+map = folium.Map(location=[38.58, -99.09], zoom_start=5, tiles="Stamen Toner") #coordinates of usa
 fgp= folium.FeatureGroup(name = "Population")
 
 fgp.add_child(folium.GeoJson(data=(open("world.json","r",encoding="utf-8-sig").read()),
 style_function=lambda x: {"fillColor":"green" if x["properties"]["POP2005"]<100000 
-else "orange" if 1000000<= x["properties"]["POP2005"] < 20000000 else "red"}))
+else "orange" if 1000000<= x["properties"]["POP2005"] < 20000000 else "red"})) #choosing color depemnding on population density
 
 fgv=folium.FeatureGroup(name="Volcanoes")
 for lt, ln, el, name in zip(lat, lon, elev, name):
-    iframe = folium.IFrame(html= html % (name, name, el), width=200, height=100)
+    iframe = folium.IFrame(html= html % (name, name, el), width=200, height=100) #only for html 
     fgv.add_child(folium.CircleMarker(location=[lt, ln],radius=8, popup=folium.Popup(iframe), icon = folium.Icon(color = "green"),
-    fill_color=color_producer(el),color="grey",fill_opacity=.7))
+    fill_color=color_producer(el),color="grey",fill_opacity=.7)) #adding marker and showing lat and lon as we hover or click
 
 map.add_child(fgv)
 map.add_child(fgp)
